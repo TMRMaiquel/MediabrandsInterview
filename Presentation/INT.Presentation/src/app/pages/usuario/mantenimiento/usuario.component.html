@@ -1,0 +1,66 @@
+<form [formGroup]="formUsuario">
+  <div class="content-block dx-card responsive-paddings">
+    <div class="title">Usuario</div>
+    <div class="editors">
+      <div class="editors-container">
+        <div class="left">
+          <dx-text-box formControlName="nombre"
+                       width="100%"
+                       [inputAttr]="{ 'aria-label': 'Nombre' }"
+                       label="Nombre"
+                       placeholder="Nombre..."
+                       [stylingMode]="stylingMode"
+                       [labelMode]="labelMode">
+            <dx-validator>
+              <dxi-validation-rule type="required"> </dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+          <dx-text-box formControlName="apellidoPaterno"
+                       width="100%"
+                       [inputAttr]="{ 'aria-label': 'Apellido Paterno' }"
+                       label="Apellido Paterno"
+                       placeholder="Apellido Paterno..."
+                       [stylingMode]="'outlined'"
+                       [labelMode]="labelMode">
+            <dx-validator>
+              <dxi-validation-rule type="required"> </dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+          <dx-text-box formControlName="apellidoMaterno"
+                       width="100%"
+                       [inputAttr]="{ 'aria-label': 'Apellido Materno' }"
+                       label="Apellido Materno"
+                       placeholder="Apellido Materno..."
+                       [stylingMode]="stylingMode"
+                       [labelMode]="labelMode">
+            <dx-validator>
+              <dxi-validation-rule type="required"> </dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+      </div>
+      <div class="center">
+        <dx-tag-box [dataSource]="listaPerfil"
+                    formControlName="perfiles"
+                    displayExpr="nombre"
+                    [multiline]="false"
+                    width="100%"
+                    placeholder="Seleccionar..."
+                    [inputAttr]="{ 'aria-label': 'Perfiles' }"
+                    label="Perfiles"
+                    [stylingMode]="stylingMode"
+                    [labelMode]="labelMode">
+          <dx-validator>
+            <dxi-validation-rule type="required"> </dxi-validation-rule>
+          </dx-validator>
+        </dx-tag-box>
+      </div>
+      <div class="center">
+        <dx-button text="Guardar"
+                   type="default"
+                   (onClick)="save($event)"
+                   class="validate"></dx-button>
+      </div>
+    </div>
+  </div>
+</form>
