@@ -2,9 +2,36 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+    <TypeScriptToolsVersion>4.5</TypeScriptToolsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="src\app\pages\usuario\busqueda\usuarioBusqueda.component.ts" />
+    <None Remove="src\app\pages\usuario\usuario.component.ts" />
+    <None Remove="src\app\pages\usuario\usuarioResource.service.ts" />
+    <None Remove="src\app\shared\dto\admin.dtos.ts" />
+    <None Remove="src\app\shared\services\employee.service.ts" />
+    <None Remove="src\app\shared\services\usuario.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="src\app\pages\employee\employee.component.ts" />
+    <TypeScriptCompile Include="src\app\pages\employee\employeeResource.service.ts" />
+    <TypeScriptCompile Include="src\app\pages\usuario\busqueda\usuarioBusqueda.component.ts" />
+    <TypeScriptCompile Include="src\app\pages\usuario\mantenimiento\usuarioResource.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\pages\usuario\mantenimiento\usuario.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\shared\dto\admin.dtos.ts" />
+    <TypeScriptCompile Include="src\app\shared\services\usuario.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\shared\services\employee.service.ts" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
