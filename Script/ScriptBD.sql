@@ -1,0 +1,134 @@
+CREATE DATABASE InterviewDB
+GO
+USE [InterviewDB]
+GO
+CREATE TABLE ADM_Employee(
+   EMPY_Id INT IDENTITY (1,1) NOT NULL,
+   OFFC_Id INT NOT NULL,
+   EMPY_Name VARCHAR(100) NOT NULL,
+   EMPY_FirstLastName VARCHAR(100) NOT NULL,
+   EMPY_SecondLastName VARCHAR(100) NULL,
+   EMPY_Address VARCHAR(500) NULL,
+   EMPY_BithDate DATE NOT NULL,
+   EMPY_HireDate DATE NOT NULL,
+   EMPY_Phone VARCHAR(20) NOT NULL,
+   EMPY_Note TEXT NULL,
+   EMPY_State BIT NOT NULL DEFAULT 1,
+   CONSTRAINT [PK_ADM_Employee] PRIMARY KEY ([EMPY_Id]),
+)
+
+CREATE TABLE ADM_Office(
+   OFFC_Id INT IDENTITY (1,1) NOT NULL,
+   OFFC_Name VARCHAR(100) NOT NULL,
+   OFFC_State BIT NOT NULL DEFAULT 1
+   CONSTRAINT [PK_ADM_Office] PRIMARY KEY ([OFFC_Id]),
+)
+
+CREATE TABLE ADM_Position(
+   POSI_Id INT IDENTITY (1,1) NOT NULL,
+   POSI_Name VARCHAR(100) NOT NULL,
+   POSI_State BIT NOT NULL DEFAULT 1
+   CONSTRAINT [PK_ADM_Position] PRIMARY KEY ([POSI_Id]),
+)
+
+CREATE TABLE ADM_Employee_Position(
+   EMPY_Id INT NOT NULL,
+   POSI_Id INT NOT NULL,
+   EMPS_State BIT NOT NULL DEFAULT 1
+)
+
+CREATE TABLE ADM_Usuario(
+   USUA_Id INT IDENTITY (1,1) NOT NULL,
+   USUA_Nombre VARCHAR (100) NOT NULL,
+   USUA_ApellidoPaterno VARCHAR(100) NOT NULL,
+   USUA_ApellidoMaterno VARCHAR(100) NOT NULL,
+   USUA_State BIT NOT NULL DEFAULT 1,
+   CONSTRAINT [PK_ADM_Usuario] PRIMARY KEY ([USUA_Id])
+)
+
+CREATE TABLE ADM_Perfil(
+   PERF_Id INT IDENTITY (1,1) NOT NULL,
+   PERF_Nombre VARCHAR (100) NOT NULL,  
+   PERF_State BIT NOT NULL DEFAULT 1,
+   CONSTRAINT [PK_ADM_Perfil] PRIMARY KEY ([PERF_Id])
+)
+
+CREATE TABLE ADM_UsuarioPerfil(
+	USUA_Id INT NOT NULL,
+    PERF_Id INT NOT NULL,
+	PERF_State BIT NOT NULL DEFAULT 1,
+	CONSTRAINT [PK_ADM_UsuarioPerfil] PRIMARY KEY ([USUA_Id],[PERF_Id])
+)
+
+ALTER TABLE ADM_Employee ADD CONSTRAINT [ADM_EMPY_FK_OFFC_Id] FOREIGN KEY (
+    [OFFC_Id]
+    ) REFERENCES [ADM_Office] (
+    [OFFC_Id]
+    )
+
+ALTER TABLE ADM_Employee_Position ADD CONSTRAINT [ADM_EMPS_FK_EMPY_Id] FOREIGN KEY (
+    [EMPY_Id]
+    ) REFERENCES [ADM_Employee] (
+    [EMPY_Id]
+    )
+
+ALTER TABLE ADM_Employee_Position ADD CONSTRAINT [ADM_EMPS_FK_POSI_Id] FOREIGN KEY (
+    [POSI_Id]
+    ) REFERENCES [ADM_Position] (
+    [POSI_Id]
+    )
+
+ALTER TABLE ADM_UsuarioPerfil ADD CONSTRAINT [FK_Usuario] FOREIGN KEY (
+    [USUA_Id]
+    ) REFERENCES [ADM_Usuario] (
+    [USUA_Id]
+    )
+
+ALTER TABLE ADM_UsuarioPerfil ADD CONSTRAINT [FK_Perfil] FOREIGN KEY (
+    [PERF_Id]
+    ) REFERENCES [ADM_Perfil] (
+    [PERF_Id]
+    )
+GO
+
+CREATE PROCEDURE SP_EMPY_Insert(
+   @EMPY_Id INT OUTPUT,
+   @OFFC_Id INT,
+   @EMPY_Name VARCHAR(100),
+   @EMPY_FirstLastName VARCHAR(100),
+   @EMPY_SecondLastName VARCHAR(100),
+   @EMPY_Address VARCHAR(500),
+   @EMPY_BithDate DATE,
+   @EMPY_HireDate DATE,
+   @EMPY_Phone VARCHAR(20),
+   @EMPY_Note TEXT
+)
+AS
+BEGIN
+
+INSERT INTO ADM_Employee (
+   OFFC_Id,
+   EMPY_Name,
+   EMPY_FirstLastName,
+   EMPY_SecondLastName,
+   EMPY_Address,
+   EMPY_BithDate,
+   EMPY_HireDate,
+   EMPY_Phone,
+   EMPY_Note
+)
+VALUES(
+   @OFFC_Id,
+   @EMPY_Name,
+   @EMPY_FirstLastName,
+   @EMPY_SecondLastName,
+   @EMPY_Address,
+   @EMPY_BithDate,
+   @EMPY_HireDate,
+   @EMPY_Phone,
+   @EMPY_Note
+)
+
+SET @EMPY_Id = SCOPE_IDENTITY()
+
+END
